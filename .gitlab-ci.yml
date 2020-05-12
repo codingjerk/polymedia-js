@@ -2,9 +2,16 @@ image: node
 
 stages:
   - test
+  - build
 
 unittest:
   stage: test
   script:
     - npm i
     - npm run test
+
+build:
+  stage: build
+  script:
+    - npm i
+    - npm run build
