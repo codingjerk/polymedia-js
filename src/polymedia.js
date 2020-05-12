@@ -4,15 +4,15 @@ const isDecimalNumber = (value) => {
   return /^\d+$/.test(value);
 };
 
-const addSpacesEvery3Digits = (number) => {
-  var parts = number.toString().split(".");
+const addSpacesEveryThreeDigits = (number) => {
+  const parts = number.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   return parts.join(".");
 };
 
 const beautifyNumber = (number) => {
-  return addSpacesEvery3Digits(number);
+  return addSpacesEveryThreeDigits(number);
 };
 
 /**
