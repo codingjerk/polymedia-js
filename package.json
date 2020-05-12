@@ -1,0 +1,15 @@
+{
+  "name": "polymedia.js",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Denis Gruzdev <codingjerk@gmail.com>",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^25"
+  }
+}
