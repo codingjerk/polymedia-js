@@ -1,4 +1,4 @@
-const beautifyTable = require("../../src/polymedia.js").beautifyTable;
+const beautifyTableData = require("../../src/polymedia.js").beautifyTableData;
 
 describe("beautifyTable", () => {
   test("splits numeric values", () => {
@@ -11,7 +11,7 @@ describe("beautifyTable", () => {
       },
     };
 
-    beautifyTable(fakeW);
+    beautifyTableData(fakeW);
 
     expect(fakeW.data.records[0]["column 0"]).toBe("1 200");
     expect(fakeW.data.records[0]["column 1"]).toBe("2 300 400");
