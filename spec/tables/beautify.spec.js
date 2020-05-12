@@ -1,4 +1,4 @@
-const beautifyTableData = require("../../src/polymedia.js").beautifyTableData;
+import { beautifyTableData } from "../../src/polymedia.js";
 
 describe("beautifyTable", () => {
   test("splits numeric values", () => {
