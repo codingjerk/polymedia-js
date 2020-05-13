@@ -26,7 +26,7 @@ const beautifyNumber = (number) => {
  * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @return {undefined}
  */
-const beautifyTableData = (w) => {
+export const beautifyTableData = (w) => {
   w.data.records.forEach(record => {
     Object.keys(record).forEach(key => {
       if (!key.startsWith("column ")) return;
@@ -38,6 +38,6 @@ const beautifyTableData = (w) => {
   });
 };
 
-export const Polymedia = {
+window.Polymedia = {
   beautifyTableData: beautifyTableData,
 };
