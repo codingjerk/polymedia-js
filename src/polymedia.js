@@ -48,6 +48,40 @@ export const beautifyTableData = (w) => {
   });
 };
 
+/**
+ * Раскрашивает строки таблицы в зависимости от значения в одном из столбцов
+ *
+ * Примечания:
+ * - Вызывать неоходимо после отрисовки таблицы, т.е. после вызова `TableRender`
+ *
+ * Пример использования:
+ * ```
+ * TableRender(
+ *   ...
+ * );
+ *
+ * Polymedia.colorizeTableByValue(w, 1, function(value) {
+ *   if (value >= 100) return "red";
+ *   if (value >= 50) return "yellow";
+ * });
+ * ```
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @param {number} columnId идентификатор столбца, значения которого будут влиять на раскраску. Начинается с 0 для первого столбца таблицы
+ * @param {function} valueToColor функция, возвращающая цвет для строки, принимающая значение в столбце с идентификатором `columnId`
+ * @return {undefined}
+ */
+export const colorizeTableByValue = (w, columnId, valueToColor) => {
+  $("#table-" + w.general.renderTo + " tr").each((_, tr) => {
+    const value = $(tr).children("td:nth-child(" + (columnId + 1) + ")").text();
+    const color = valueToColor(value);
+
+    if (color !== undefined) {
+      $(tr).css("background-color", color);
+    }
+  });
+};
+
 window.Polymedia = {
   beautifyTableData: beautifyTableData,
 };
