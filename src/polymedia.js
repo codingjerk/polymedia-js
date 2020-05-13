@@ -21,10 +21,12 @@ const beautifyNumber = (number) => {
  *
  * Работает только с обычными таблицами, т.к. только они получают данные напрямую через переменную `w`
  *
+ * Вызывать неоходимо до отрисовки таблицы, т.е. до вызова `TableRender`
+ *
  * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @return {undefined}
  */
-export const beautifyTableData = (w) => {
+const beautifyTableData = (w) => {
   w.data.records.forEach(record => {
     Object.keys(record).forEach(key => {
       if (!key.startsWith("column ")) return;
@@ -34,4 +36,8 @@ export const beautifyTableData = (w) => {
       }
     });
   });
+};
+
+export const Polymedia = {
+  beautifyTableData: beautifyTableData,
 };
