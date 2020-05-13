@@ -1,6 +1,6 @@
 import { beautifyTableData } from "../../src/polymedia.js";
 
-describe("beautifyTable", () => {
+describe("beautifyTableData", () => {
   test("splits numeric values", () => {
     const fakeW = {
       data: {
