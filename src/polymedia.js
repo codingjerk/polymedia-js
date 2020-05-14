@@ -117,6 +117,38 @@ export const updateTableValues = (w, columnIds, update) => {
   });
 };
 
+/*
+ * "Улучшает" таблицу, а именно:
+ * - Разбивает числа пробелами на каждые 3 цифры (`1234` → `1 234`)
+ *
+ * Примечания:
+ * - Работает только с обычными таблицами, т.к. только они получают данные напрямую через переменную `w`
+ * - Вызывать неоходимо после отрисовки таблицы, т.е. после вызова `TableRender`
+ *
+ * Пример использования:
+ * ```
+ * TableRender(
+ *   ...
+ * );
+ *
+ * Polymedia.beautifyTable(w, [0, 2, 3]);
+ * ```
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @param {number[]} columnIds список идентификаторов столбцов для улучшения. Нумерация начинается с 0
+ * @return {undefined}
+ */
+export const beautifyTable = (w, columnIds) => {
+  updateTableValues(w, columnIds, value => {
+    if (isDecimalNumber(value)) {
+      return addSpacesEveryThreeDigits(value);
+    }
+  });
+};
+
 window.Polymedia = {
   beautifyTableData: beautifyTableData,
+  colorizeTableByValue: colorizeTableByValue,
+  updateTableValues: updateTableValues,
+  beautifyTable: beautifyTable,
 };
