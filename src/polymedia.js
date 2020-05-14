@@ -139,6 +139,7 @@ export const updateTableValues = (w, columnIds, update) => {
  * @return {undefined}
  */
 export const beautifyTable = (w, columnIds) => {
+  // TODO: write tests
   updateTableValues(w, columnIds, value => {
     if (isDecimalNumber(value)) {
       return addSpacesEveryThreeDigits(value);
