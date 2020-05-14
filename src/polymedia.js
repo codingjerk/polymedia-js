@@ -82,6 +82,41 @@ export const colorizeTableByValue = (w, columnId, valueToColor) => {
   });
 };
 
+/**
+ * Заменяет значения в ячейках таблицы преобразуя их функцией `update`
+ *
+ * Примечания:
+ * - Вызывать неоходимо после отрисовки таблицы, т.е. после вызова `TableRender`
+ *
+ * Пример использования:
+ * ```
+ * TableRender(
+ *   ...
+ * );
+ *
+ * Polymedia.updateTableValues(w, [1, 2], function(value) {
+ *   return value * 2;
+ * });
+ * ```
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @param {number[]} columnIds идентификаторы столбцов, значения в которых будут преобразовываться. Начинается с 0 для первого столбца таблицы
+ * @param {function} update функция, принимающая значение ячейки и возвращающая новое
+ * @return {undefined}
+ */
+export const updateTableValues = (w, columnIds, update) => {
+  // TODO: write tests
+  $(`#table-${w.general.renderTo} tr`).each((_, tr) => {
+    columnIds.forEach(columnId => {
+      const cell = $(tr).children(`tr:nth-child(${columnId + 1})`);
+      const value = cell.text();
+      const newValue = update(value);
+
+      if (newValue !== undefined) cell.text(newValue);
+    });
+  });
+};
+
 window.Polymedia = {
   beautifyTableData: beautifyTableData,
 };
