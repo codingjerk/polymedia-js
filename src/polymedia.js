@@ -15,6 +15,22 @@ const beautifyNumber = (number) => {
   return addSpacesEveryThreeDigits(number);
 };
 
+const getRelativeDate = (date) => {
+  const result = new Date();
+
+  if (date === "today") {
+    // pass
+  } else if (date === "yesterday") {
+    result.setDate(result.getDate() - 1);
+  } else if (date === "tomorrow") {
+    result.setDate(result.getDate() + 1);
+  } else {
+    console.error("Неизвестная относительная дата: " + date);
+  }
+
+  return result;
+};
+
 /**
  * "Улучшает" табличные данные, а именно:
  * - Разбивает числа пробелами на каждые 3 цифры (`1234` → `1 234`)
@@ -140,6 +156,7 @@ export const updateTableValues = (w, columnIds, update) => {
  */
 export const beautifyTable = (w, columnIds) => {
   // TODO: write tests
+  // TODO: determine columnIds automaticaly
   updateTableValues(w, columnIds, value => {
     if (isDecimalNumber(value)) {
       return addSpacesEveryThreeDigits(value);
@@ -147,9 +164,38 @@ export const beautifyTable = (w, columnIds) => {
   });
 };
 
+/*
+ * Переводит дату в строку. В качестве даты может принимать относительные строковые значения (`yesterday`, `today` и `tomorrow`)
+ *
+ * Пример использования:
+ * ```
+ * var today = formatDate("today", "DD-MM-YYYY")
+ * ```
+ *
+ * @param {Date | string} date Дата. Абсолютная, объект класса `Date`, или относительная в виде строки (`yesterday`, `today` или `tomorrow`)
+ * @param {string} format Строка формата, может содержать плейсхолдеры `DD`, `MM` и `YYYY`, которые будут заменены на день, месяц и год соответственно
+ * @return {string} Исходная дата в виде строки в заданном формате
+ */
+export const formatDate = (date, format) => {
+  // TODO: write tests
+  if (typeof date === "string") {
+    date = getRelativeDate(date);
+  }
+
+  const year = Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
+  const month = Intl.DateTimeFormat("en", { month: "2-digit" }).format(date);
+  const day = Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
+
+  return format
+    .replace("YYYY", year)
+    .replace("MM", month)
+    .replace("DD", day);
+};
+
 window.Polymedia = {
   beautifyTableData: beautifyTableData,
   colorizeTableByValue: colorizeTableByValue,
   updateTableValues: updateTableValues,
   beautifyTable: beautifyTable,
+  formatDate: formatDate,
 };
