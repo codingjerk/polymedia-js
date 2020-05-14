@@ -108,7 +108,7 @@ export const updateTableValues = (w, columnIds, update) => {
   // TODO: write tests
   $(`#table-${w.general.renderTo} tr`).each((_, tr) => {
     columnIds.forEach(columnId => {
-      const cell = $(tr).children(`tr:nth-child(${columnId + 1})`);
+      const cell = $(tr).children(`td:nth-child(${columnId + 1})`);
       const value = cell.text();
       const newValue = update(value);
 
