@@ -20,16 +20,16 @@ const beautifyNumber = (number) => {
  * - Разбивает числа пробелами на каждые 3 цифры (`1234` -> `1 234`)
  *
  * Примечания:
- * - *ВАЖНО* Ломает сортировку
+ * - *ВАЖНО* Ломает сортировку, для сохранения возможности сортировки следует воспользоваться `beautifyTable`
  * - Работает только с обычными таблицами, т.к. только они получают данные напрямую через переменную `w`
  * - Вызывать неоходимо до отрисовки таблицы, т.е. до вызова `TableRender`
  *
  * Пример использования:
  * ```
- * beautifyTableData(w);
+ * Polymedia.beautifyTableData(w);
  *
  * TableRender(
- *    ...
+ *   ...
  * );
  * ```
  *
@@ -72,8 +72,8 @@ export const beautifyTableData = (w) => {
  * @return {undefined}
  */
 export const colorizeTableByValue = (w, columnId, valueToColor) => {
-  $("#table-" + w.general.renderTo + " tr").each((_, tr) => {
-    const value = $(tr).children("td:nth-child(" + (columnId + 1) + ")").text();
+  $(`#table-${w.general.renderTo} tr`).each((_, tr) => {
+    const value = $(tr).children(`td:nth-child(${columnId + 1})`).text();
     const color = valueToColor(value);
 
     if (color !== undefined) {
