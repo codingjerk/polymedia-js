@@ -192,10 +192,53 @@ export const formatDate = (date, format) => {
     .replace("DD", day);
 };
 
+/*
+ * Устанавливает значение фильтра в зависимости от текста. В основном используется, чтобы установить значение фильтра при инициализации
+ *
+ * Примечания:
+ * - Использовать можно только для установки значения самого фильтра
+ * - Не работает на фильтре по датам (из-за ограничения платформы)
+ * - Вызывать стоит до вызова `FilterRender`
+ * - В случае, если необходимого значения в фильтре нет, он сбрасывается
+ *
+ * Пример использования:
+ * ```
+ * // Для установки определённого значения
+ * Polymedia.setFilterValueByText(w, Polymedia.formatDate("yesterday", "YYYY-MM-DD"));
+ * Polymedia.setFilterValueByText(w, Polymedia.formatDate("yesterday", "YYYY-MM-DD"));
+ *
+ * FilterRender({
+ *   ...
+ * });
+ * ```
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @param {string} text Текст, в соответствии с которым нужно установить значение фильтра
+ * @return {undefined}
+ */
+export const setFilterValueByText = (w, text) => {
+  // TODO: write tests
+  // TODO: check for correct usage (if widget is FilterRender)
+  w.data.selected = [];
+  w.data.data.forEach(row => {
+    if (row.text === text) {
+      w.data.selected.push(row);
+    }
+  });
+
+  if (w.data.selected.length === 0) {
+    console.error(`Не удалось найти значение с текстом "${text}" в фильтре. Фильтр будет сброшен`);
+  }
+
+  const ids = w.data.selected.map(row => [row.id]);
+  visApi().setFilterSelectedValues(w.general.renderTo, ids);
+};
+
 window.Polymedia = {
   beautifyTableData: beautifyTableData,
   colorizeTableByValue: colorizeTableByValue,
   updateTableValues: updateTableValues,
   beautifyTable: beautifyTable,
   formatDate: formatDate,
+  setFilterValueByText: setFilterValueByText,
 };
