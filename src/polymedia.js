@@ -44,9 +44,9 @@ const getRelativeDate = (date) => {
  * ```
  * Polymedia.beautifyTableData(w);
  *
- * TableRender(
+ * TableRender({
  *   ...
- * );
+ * });
  * ```
  *
  * @param {object} w Переменная `w` (глобальная переменная виджета)
@@ -72,9 +72,9 @@ export const beautifyTableData = (w) => {
  *
  * Пример использования:
  * ```
- * TableRender(
+ * TableRender({
  *   ...
- * );
+ * });
  *
  * Polymedia.colorizeTableByValue(w, 1, function(value) {
  *   if (value >= 100) return "red";
@@ -83,8 +83,8 @@ export const beautifyTableData = (w) => {
  * ```
  *
  * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @param {number} columnId идентификатор столбца, значения которого будут влиять на раскраску. Начинается с 0 для первого столбца таблицы
- * @param {function} valueToColor функция, возвращающая цвет для строки, принимающая значение в столбце с идентификатором `columnId`
+ * @param {number} columnId Идентификатор столбца, значения которого будут влиять на раскраску. Начинается с 0 для первого столбца таблицы
+ * @param {function} valueToColor Функция, возвращающая цвет для строки, принимающая значение в столбце с идентификатором `columnId`
  * @return {undefined}
  */
 export const colorizeTableByValue = (w, columnId, valueToColor) => {
@@ -106,9 +106,9 @@ export const colorizeTableByValue = (w, columnId, valueToColor) => {
  *
  * Пример использования:
  * ```
- * TableRender(
+ * TableRender({
  *   ...
- * );
+ * });
  *
  * Polymedia.updateTableValues(w, [1, 2], function(value) {
  *   return value * 2;
@@ -116,8 +116,8 @@ export const colorizeTableByValue = (w, columnId, valueToColor) => {
  * ```
  *
  * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @param {number[]} columnIds идентификаторы столбцов, значения в которых будут преобразовываться. Начинается с 0 для первого столбца таблицы
- * @param {function} update функция, принимающая значение ячейки и возвращающая новое
+ * @param {number[]} columnIds Идентификаторы столбцов, значения в которых будут преобразовываться. Начинается с 0 для первого столбца таблицы
+ * @param {function} update Функция, принимающая значение ячейки и возвращающая новое
  * @return {undefined}
  */
 export const updateTableValues = (w, columnIds, update) => {
@@ -143,15 +143,15 @@ export const updateTableValues = (w, columnIds, update) => {
  *
  * Пример использования:
  * ```
- * TableRender(
+ * TableRender({
  *   ...
- * );
+ * });
  *
  * Polymedia.beautifyTable(w, [0, 2, 3]);
  * ```
  *
  * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @param {number[]} columnIds список идентификаторов столбцов для улучшения. Нумерация начинается с 0
+ * @param {number[]} columnIds Список идентификаторов столбцов для улучшения. Нумерация начинается с 0
  * @return {undefined}
  */
 export const beautifyTable = (w, columnIds) => {
@@ -169,7 +169,7 @@ export const beautifyTable = (w, columnIds) => {
  *
  * Пример использования:
  * ```
- * var today = formatDate("today", "DD-MM-YYYY")
+ * var today = Polymedia.formatDate("today", "DD-MM-YYYY")
  * ```
  *
  * @param {Date | string} date Дата. Абсолютная, объект класса `Date`, или относительная в виде строки (`yesterday`, `today` или `tomorrow`)
