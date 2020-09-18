@@ -48,9 +48,6 @@ const getRelativeDate = (date) => {
  *   ...
  * });
  * ```
- *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @return {undefined}
  */
 export const beautifyTableData = (w) => {
   w.data.records.forEach(record => {
@@ -82,10 +79,8 @@ export const beautifyTableData = (w) => {
  * });
  * ```
  *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @param {number} columnId Идентификатор столбца, значения которого будут влиять на раскраску. Начинается с 0 для первого столбца таблицы
  * @param {function} valueToColor Функция, возвращающая цвет для строки, принимающая значение в столбце с идентификатором `columnId`
- * @return {undefined}
  */
 export const colorizeTableByValue = (w, columnId, valueToColor) => {
   $(`#table-${w.general.renderTo} tr`).each((_, tr) => {
@@ -115,10 +110,8 @@ export const colorizeTableByValue = (w, columnId, valueToColor) => {
  * });
  * ```
  *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @param {number[]} columnIds Идентификаторы столбцов, значения в которых будут преобразовываться. Начинается с 0 для первого столбца таблицы
  * @param {function} update Функция, принимающая значение ячейки и возвращающая новое
- * @return {undefined}
  */
 export const updateTableValues = (w, columnIds, update) => {
   // TODO: write tests
@@ -150,9 +143,7 @@ export const updateTableValues = (w, columnIds, update) => {
  * Polymedia.beautifyTable(w, [0, 2, 3]);
  * ```
  *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @param {number[]} columnIds Список идентификаторов столбцов для улучшения. Нумерация начинается с 0
- * @return {undefined}
  */
 export const beautifyTable = (w, columnIds) => {
   // TODO: write tests
@@ -212,9 +203,7 @@ export const formatDate = (date, format) => {
  * });
  * ```
  *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
  * @param {string} text Текст, в соответствии с которым нужно установить значение фильтра
- * @return {undefined}
  */
 export const setFilterValueByText = (w, text) => {
   // TODO: write tests
@@ -238,9 +227,6 @@ export const setFilterValueByText = (w, text) => {
  * Удаляет стрелки сортировки в заголовке обычной таблицы.
  * Должна вызываться *до* вызова TableRender.
  * *ВАЖНО* Это не отключит саму сортировку при клике на заголовок, для этого нужно использовать метод `disableTableSorting`.
- *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @return {undefined}
  */
 export const removeTableSortingArrows = w => {
   w.data.columns.forEach(value => {
@@ -252,9 +238,6 @@ export const removeTableSortingArrows = w => {
  * Отключает сортировку при клике на заголовки колонок в обычной таблице.
  * Должна вызываться *после* вызова TableRender.
  * *ВАЖНО* Это не уберёт стрелки из заголовков, для этого нужно использовать метод `removeTableSortingArrows`.
- *
- * @param {object} w Переменная `w` (глобальная переменная виджета)
- * @return {undefined}
  */
 export const disableTableSorting = w => {
   const table = $(`#table-{w.general.renderTo}`);
