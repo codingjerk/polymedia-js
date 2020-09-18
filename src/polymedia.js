@@ -234,11 +234,44 @@ export const setFilterValueByText = (w, text) => {
   visApi().setFilterSelectedValues(w.general.renderTo, ids);
 };
 
+/**
+ * Удаляет стрелки сортировки в заголовке обычной таблицы.
+ * Должна вызываться *до* вызова TableRender.
+ * *ВАЖНО* Это не отключит саму сортировку при клике на заголовок, для этого нужно использовать метод `disableTableSorting`.
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @return {undefined}
+ */
+export const removeTableSortingArrows = w => {
+  w.data.columns.forEach(value => {
+    value.sortable = false;
+  });
+};
+
+/**
+ * Отключает сортировку при клике на заголовки колонок в обычной таблице.
+ * Должна вызываться *после* вызова TableRender.
+ * *ВАЖНО* Это не уберёт стрелки из заголовков, для этого нужно использовать метод `removeTableSortingArrows`.
+ *
+ * @param {object} w Переменная `w` (глобальная переменная виджета)
+ * @return {undefined}
+ */
+export const disableTableSorting = w => {
+  const table = $(`#table-{w.general.renderTo}`);
+  const ths = table.find("thead > tr > th");
+
+  ths.off("mouseup");
+  ths.off("mousedown");
+};
+
 window.Polymedia = {
-  beautifyTableData: beautifyTableData,
-  colorizeTableByValue: colorizeTableByValue,
-  updateTableValues: updateTableValues,
-  beautifyTable: beautifyTable,
-  formatDate: formatDate,
-  setFilterValueByText: setFilterValueByText,
+  beautifyTableData,
+  colorizeTableByValue,
+  updateTableValues,
+  beautifyTable,
+  removeTableSortingArrows,
+  disableTableSorting,
+
+  formatDate,
+  setFilterValueByText,
 };
