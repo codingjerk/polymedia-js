@@ -14,4 +14,8 @@ build:
   stage: build
   script:
     - npm i
-    - npm run build
+    - npm run build -- --mode=production
+  
+  artifacts:
+    paths:
+      - dist/main.js
