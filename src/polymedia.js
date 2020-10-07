@@ -247,6 +247,25 @@ export const disableTableSorting = w => {
   ths.off("mousedown");
 };
 
+/**
+ * Возвращает API-токен для ViQube API
+ * Берёт используемый на дэшборде токен из глобальной переменной
+ * или извлекает его из Session Storage (для новых версий).
+ * 
+ * @return {string} API-Токен ViQube
+ */
+export const getAccessToken = () => {
+  // TODO: check if expired
+  // TODO: emit new token if can't get it from global variable or session storage
+  // TODO: write tests
+  // Для платформы младше 2.18
+  if (typeof _accessToken !== "undefined") return _accessToken;
+  
+  // Для платформы старше 2.18
+  let userData = JSON.parse(sessionStorage.getItem("oidc.user:/idsrv:DashboardsApp"));
+  return userData.access_token;
+};
+
 window.Polymedia = {
   beautifyTableData,
   colorizeTableByValue,
@@ -257,4 +276,6 @@ window.Polymedia = {
 
   formatDate,
   setFilterValueByText,
+
+  getAccessToken,
 };
