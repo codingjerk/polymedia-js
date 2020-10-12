@@ -262,7 +262,10 @@ export const getAccessToken = () => {
   if (typeof _accessToken !== "undefined") return _accessToken;
   
   // Для платформы старше 2.18
-  let userData = JSON.parse(sessionStorage.getItem("oidc.user:/idsrv:DashboardsApp"));
+  let schema = document.location.protocol;
+  let host = document.location.host;
+  let key = `oidc.user:${schema}//${host}/idsrv:dashboard_viewer`;
+  let userData = JSON.parse(sessionStorage.getItem(key));
   return userData.access_token;
 };
 
