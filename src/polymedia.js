@@ -256,6 +256,7 @@ export const disableTableSorting = w => {
  */
 export const getAccessToken = () => {
   // TODO: check if expired
+  // TODO: write function to detect version instead
   // TODO: emit new token if can't get it from global variable or session storage
   // TODO: write tests
   // Для платформы младше 2.18
