@@ -11,6 +11,7 @@ const addSpacesEveryThreeDigits = (number) => {
   return parts.join(".");
 };
 
+// TODO: export
 const beautifyNumber = (number) => {
   return addSpacesEveryThreeDigits(number);
 };
@@ -248,7 +249,26 @@ export const disableTableSorting = w => {
 };
 
 /**
- * Возвращает API-токен для ViQube API
+ * Переходит на лист по его номеру
+ * 
+ * @param {number | string} sheetNumber Номер листа, начиная с 1
+ */
+export const goToSheetByNumber = sheetNumber => {
+  // TODO: allow to pass number or name or sheet id
+  // TODO: allow to setup filters (maybe throught different method)
+  // TODO: write tests
+
+  let sheetTab = $(`#va-sheet-tabs>li:nth-child(${sheetNumber}`);
+  if (sheetTab.length === 0) {
+    console.error(`Не найден лист номер "${sheetNumber}"`);
+    return;
+  }
+
+  sheetTab.trigger("click");
+}
+
+/**
+ * Возвращает API-токен для ViQube API.
  * Берёт используемый на дэшборде токен из глобальной переменной
  * или извлекает его из Session Storage (для новых версий).
  * 
@@ -271,6 +291,7 @@ export const getAccessToken = () => {
 };
 
 window.Polymedia = {
+  // Таблицы
   beautifyTableData,
   colorizeTableByValue,
   updateTableValues,
@@ -278,8 +299,11 @@ window.Polymedia = {
   removeTableSortingArrows,
   disableTableSorting,
 
+  // Всякое
   formatDate,
   setFilterValueByText,
+  goToSheetByNumber,
 
+  // API
   getAccessToken,
 };
