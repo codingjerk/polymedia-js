@@ -253,7 +253,7 @@ export const syncWithOtherFilter = (w, masterGuid) => {
       visApi().setFilterSelectedValues(w.general.renderTo, selectedValues);
     },
   );
-  
+
   // Синхронизирует значение фильтра при первой отрисовке дэшборда,
   // после того, как отработают текущие задачи в event loop
   setTimeout(() => {
@@ -337,7 +337,7 @@ window.Polymedia = {
   removeTableSortingArrows,
   disableTableSorting,
 
-  // API
+  // Фильтры
   setFilterValueByText,
   syncWithOtherFilter,
 
