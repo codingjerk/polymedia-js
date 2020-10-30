@@ -224,6 +224,41 @@ export const setFilterValueByText = (w, text) => {
   visApi().setFilterSelectedValues(w.general.renderTo, ids);
 };
 
+/*
+ * Связывает фильтр с мастер-фильтром. Если значение мастер-фильтра изменяется, то изменится также и значение этого фильтра.
+ *
+ * Примечания:
+ * - Устанавливает значения из мастер-фильтра, даже если их нет в подчиненном фильтре
+ * - Вызывать стоит после вызова `FilterRender`
+ *
+ * Пример использования:
+ * ```
+ * FilterRender({
+ *   ...
+ * });
+ *
+ * Polymedia.setMasterFilter(w, "263a817c471743fbb34dbcb589f92bd5");
+ *
+ * ```
+ *
+ * @param {string} masterGuid GUID мастер-фильтра
+ */
+export const setMasterFilter = (w, masterGuid) => {
+  // TODO: test
+  const masterValues = visApi().getSelectedValues(masterGuid);
+  visApi().setFilterSelectedValues(w.general.renderTo, masterValues);
+
+  visApi().onSelectedValuesChangedListener(
+    {
+      widgetGuid: masterGuid,
+      guid: `${w.general.renderTo}_slave_listener`,
+    },
+    ({selectedValues}) => {
+      visApi().setFilterSelectedValues(w.general.renderTo, selectedValues);
+    },
+  );
+};
+
 /**
  * Удаляет стрелки сортировки в заголовке обычной таблицы.
  * Должна вызываться *до* вызова TableRender.
@@ -250,7 +285,7 @@ export const disableTableSorting = w => {
 
 /**
  * Переходит на лист по его номеру
- * 
+ *
  * @param {number | string} sheetNumber Номер листа, начиная с 1
  */
 export const goToSheetByNumber = sheetNumber => {
@@ -271,7 +306,7 @@ export const goToSheetByNumber = sheetNumber => {
  * Возвращает API-токен для ViQube API.
  * Берёт используемый на дэшборде токен из глобальной переменной
  * или извлекает его из Session Storage (для новых версий).
- * 
+ *
  * @return {string} API-Токен ViQube
  */
 export const getAccessToken = () => {
@@ -281,7 +316,7 @@ export const getAccessToken = () => {
   // TODO: write tests
   // Для платформы младше 2.18
   if (typeof _accessToken !== "undefined") return _accessToken;
-  
+
   // Для платформы старше 2.18
   let schema = document.location.protocol;
   let host = document.location.host;
@@ -299,11 +334,12 @@ window.Polymedia = {
   removeTableSortingArrows,
   disableTableSorting,
 
+  // API
+  setFilterValueByText,
+  setMasterFilter,
+
   // Всякое
   formatDate,
-  setFilterValueByText,
-  goToSheetByNumber,
-
-  // API
   getAccessToken,
+  goToSheetByNumber,
 };
