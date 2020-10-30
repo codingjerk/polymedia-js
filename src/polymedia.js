@@ -223,6 +223,41 @@ export const setFilterValueByText = (w, text) => {
   visApi().setFilterSelectedValues(w.general.renderTo, ids);
 };
 
+/*
+ * Связывает фильтр с мастер-фильтром. Если значение мастер-фильтра изменяется, то изменится также и значение этого фильтра.
+ *
+ * Примечания:
+ * - Устанавливает значения из мастер-фильтра, даже если их нет в подчиненном фильтре
+ * - Вызывать стоит после вызова `FilterRender`
+ *
+ * Пример использования:
+ * ```
+ * FilterRender({
+ *   ...
+ * });
+ *
+ * Polymedia.setMasterFilter(w, "263a817c471743fbb34dbcb589f92bd5");
+ *
+ * ```
+ *
+ * @param {string} masterGuid GUID мастер-фильтра
+ */
+export const setMasterFilter = (w, masterGuid) => {
+  // TODO: test
+  const masterValues = visApi().getSelectedValues(masterGuid);
+  visApi().setFilterSelectedValues(w.general.renderTo, masterValues);
+
+  visApi().onSelectedValuesChangedListener(
+    {
+      widgetGuid: masterGuid,
+      guid: `${w.general.renderTo}_slave_listener`,
+    },
+    ({selectedValues}) => {
+      visApi().setFilterSelectedValues(w.general.renderTo, selectedValues);
+    },
+  );
+};
+
 /**
  * Удаляет стрелки сортировки в заголовке обычной таблицы.
  * Должна вызываться *до* вызова TableRender.
@@ -277,9 +312,10 @@ window.Polymedia = {
   beautifyTable,
   removeTableSortingArrows,
   disableTableSorting,
+  
+  setFilterValueByText,
+  setMasterFilter,
 
   formatDate,
-  setFilterValueByText,
-
   getAccessToken,
 };
