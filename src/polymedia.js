@@ -237,16 +237,13 @@ export const setFilterValueByText = (w, text) => {
  *   ...
  * });
  *
- * Polymedia.setMasterFilter(w, "263a817c471743fbb34dbcb589f92bd5");
+ * Polymedia.syncWithOtherFilter(w, "263a817c471743fbb34dbcb589f92bd5");
  * ```
  *
  * @param {string} masterGuid GUID мастер-фильтра
  */
-export const setMasterFilter = (w, masterGuid) => {
+export const syncWithOtherFilter = (w, masterGuid) => {
   // TODO: test
-  const masterValues = visApi().getSelectedValues(masterGuid);
-  visApi().setFilterSelectedValues(w.general.renderTo, masterValues);
-
   visApi().onSelectedValuesChangedListener(
     {
       widgetGuid: masterGuid,
@@ -256,6 +253,13 @@ export const setMasterFilter = (w, masterGuid) => {
       visApi().setFilterSelectedValues(w.general.renderTo, selectedValues);
     },
   );
+  
+  // Синхронизирует значение фильтра при первой отрисовке дэшборда,
+  // после того, как отработают текущие задачи в event loop
+  setTimeout(() => {
+    const masterValues = visApi().getSelectedValues(masterGuid);
+    visApi().setFilterSelectedValues(w.general.renderTo, masterValues);
+  }, 0);
 };
 
 /**
@@ -335,7 +339,7 @@ window.Polymedia = {
 
   // API
   setFilterValueByText,
-  setMasterFilter,
+  syncWithOtherFilter,
 
   // Всякое
   formatDate,
