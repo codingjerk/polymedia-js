@@ -238,7 +238,6 @@ export const setFilterValueByText = (w, text) => {
  * });
  *
  * Polymedia.setMasterFilter(w, "263a817c471743fbb34dbcb589f92bd5");
- *
  * ```
  *
  * @param {string} masterGuid GUID мастер-фильтра
